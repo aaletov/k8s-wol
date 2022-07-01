@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package wtapi;
+import "google/protobuf/empty.proto";
+option go_package="./wtapi";
+
+service WolController {
+  rpc WakeUp (WakeUpRequest) returns (google.protobuf.Empty) {}
+}
+
+message WakeUpRequest {
+  string MAC = 1;
+}
