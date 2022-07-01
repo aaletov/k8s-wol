@@ -5,30 +5,39 @@ import (
 	"os"
 	"encoding/hex"
 	"net"
+	"errors"
 )
 
 func main() {
-	targetMAC := os.Args[1]
-
-	fmt.Println(targetMAC)
-
-	byteMac, _ := stringToMac(targetMAC)
-	fmt.Println(hex.EncodeToString(byteMac))
-
-	packet := genMagicPacket(byteMac)
-	fmt.Println(hex.EncodeToString(packet))
-
-	conn, err := net.Dial("udp", "127.0.0.1:1234")
-
-	if err != nil {
-		fmt.Printf("Some error %v", err)
+	if len(os.Args) != 2 {
+		fmt.Errorf("%v\n", "Invalid count of arguments")
 		return
 	}
 
-	_, err = fmt.Fprintf(conn, hex.EncodeToString(packet))
+	targetMAC := os.Args[1]
+	byteMac, err := stringToMac(targetMAC)
 
 	if err != nil {
-		fmt.Printf("Some error %v", err)
+		fmt.Errorf("%v\n", "TargetMAC is invalid: %v", err)
+		return
+	}
+
+	packet := genMagicPacket(byteMac)
+
+	local,err := net.ResolveUDPAddr("udp4", ":9")
+	destinationAddress, err := net.ResolveUDPAddr("udp4", "192.168.0.255:9")
+	connection, err := net.DialUDP("udp4", local, destinationAddress)
+	defer connection.Close()
+
+	if err != nil {
+		fmt.Errorf("%v\n", "Unable to create socket:%v", err)
+		return
+	}
+
+	_, err = connection.Write(packet)
+
+	if err != nil {
+		fmt.Errorf("%v\n", "Unable to write to the socker: %v", err)
 		return
 	}
 }
@@ -40,11 +49,19 @@ func stringToMac(stringMac string) ([]byte, error) {
 		err error
 	)
 
+	if len(stringMac) != 17 {
+		return nil, errors.New("MAC length is incorrect")
+	}
+
 	for i := 0; i < 6; i += 1 {
 		byteBuf, err = hex.DecodeString(string(stringMac[3 * i : 3 * i + 2]))
 
 		if err != nil {
 			return nil, err
+		}
+
+		if len(byteBuf) != 1 {
+			return nil, errors.New("MAC is incorrect")
 		}
 
 		byteMac[i] = byteBuf[0]
