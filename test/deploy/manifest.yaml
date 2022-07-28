@@ -8,11 +8,11 @@ spec:
     image: server:latest
     imagePullPolicy: IfNotPresent
     volumeMounts:
-    - mountPath: /var/logs
+    - mountPath: /var/log
       name: logs-volume
-    args: ["-logpath=/var/logs/server.log"]
+    args: ["-logpath=/var/log/server.log"]
   volumes:
   - name: logs-volume
     hostPath: 
-      path: /var/logs
+      path: /var/log
       type: DirectoryOrCreate
