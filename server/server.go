@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net"
 	"context"
-	"github.com/aaletov/wol-translator/api/wtapi"
-	"github.com/aaletov/wol-translator/utils"
+	"github.com/aaletov/k8s-wol/api/wtapi"
+	"github.com/aaletov/k8s-wol/utils"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 

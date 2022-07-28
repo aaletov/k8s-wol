@@ -5,16 +5,29 @@ import (
 	"net"
 	"flag"
 	"google.golang.org/grpc"
-	"github.com/aaletov/wol-translator/api/wtapi"
-	server "github.com/aaletov/wol-translator/server/serverimpl"
+	"github.com/aaletov/k8s-wol/api/wtapi"
+	"github.com/aaletov/k8s-wol/utils"
+	"github.com/aaletov/k8s-wol/server"
+)
+
+var (
+	logPath = flag.String("logpath", "", "Log path for Node Volume Manager service")
 )
 
 func main() {
+	flag.Parse()
+
 	var (
 		hostAddr string
 		targetAddr string
 		port int
 	)
+
+	logger, err := utils.InitLogger(*logPath)
+	logger.Info("Initialized logger")
+
+	server.RegisterNode(logger)
+	logger.Info("Registered node")
 
 	flag.StringVar(&hostAddr, "host_addr", "", "")
 	flag.StringVar(&targetAddr, "target_addr", "", "")

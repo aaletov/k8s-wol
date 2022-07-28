@@ -3,6 +3,8 @@ package utils
 import (
 	"errors"
 	"encoding/hex"
+	"github.com/sirupsen/logrus"
+	"os"
 )
 
 func StringToMac(stringMac string) ([]byte, error) {
@@ -31,4 +33,20 @@ func StringToMac(stringMac string) ([]byte, error) {
 	}
 
 	return byteMac, nil
+}
+
+func InitLogger(logPath string) (*logrus.Logger, error) {
+	logger := logrus.New()
+	logger.SetLevel(logrus.DebugLevel)
+
+	if logPath != "" {
+		file, err := os.OpenFile(logPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			logger.SetOutput(os.Stdout)
+			return logger, err
+		}
+		logger.SetOutput(file)
+	}
+
+	return logger, nil
 }
