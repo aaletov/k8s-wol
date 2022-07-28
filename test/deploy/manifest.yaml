@@ -7,12 +7,4 @@ spec:
   - name: server
     image: server:latest
     imagePullPolicy: IfNotPresent
-    volumeMounts:
-    - mountPath: /var/log
-      name: logs-volume
-    args: ["-logpath=/var/log/server.log"]
-  volumes:
-  - name: logs-volume
-    hostPath: 
-      path: /var/log
-      type: DirectoryOrCreate
+    
