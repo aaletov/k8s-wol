@@ -26,7 +26,11 @@ func main() {
 	logger, err := utils.InitLogger(*logPath)
 	logger.Info("Initialized logger")
 
-	server.RegisterNode(logger)
+	err = server.RegisterNode(logger)
+	if err != nil {
+		logger.Errorf("Failed to register node: %v", err)
+		return
+	}
 	logger.Info("Registered node")
 
 	flag.StringVar(&hostAddr, "host_addr", "", "")

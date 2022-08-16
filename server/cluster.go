@@ -28,7 +28,7 @@ func RegisterNode(logger *logrus.Logger) error {
 
 	node, err := clientset.CoreV1().Nodes().Get(context.TODO(), nodeName, metav1.GetOptions{})
 
-	logger.Infof("Got node\n%v\n", node)
+	logger.Infof("Got node: %v", node)
 
 	return nil
 }
