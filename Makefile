@@ -16,8 +16,8 @@ install-protoc:
 
 compile-proto:
 	mkdir -p api/generated/v1/
-	protoc -I=api/v1 --go-grpc_out=api/generated/v1 api/v1/*.proto
-	protoc -I=api/v1 --go_out=api/generated/v1 api/v1/*.proto
+	protoc -I=api/v1 --go-grpc_out=api/generated api/v1/*.proto
+	protoc -I=api/v1 --go_out=api/generated api/v1/*.proto
 
 install-protoc-gen-go:
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
