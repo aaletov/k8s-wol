@@ -1,9 +1,15 @@
+include variables.mk
+
 build-server:
 	CGO_ENABLED=0 go build -o ./build/server/server ./cmd/server
 
 docker-build-server:
 	cp ./server/Dockerfile ./build/server/Dockerfile
 	docker build --file ./build/server/Dockerfile --tag server:latest ./build/server 
+
+kind-install:
+	chmod +x $(KIND_DIR)/kind-install.sh
+	$(KIND_DIR)/kind-install.sh
 
 kind-create-cluster:
 	${KIND} create cluster --config ./test/deploy/kind/kind.yaml --image kindest/node:v1.23.5 --wait 60s

@@ -1,0 +1,2 @@
+PROJECT_PATH := ${PWD}
+KIND_DIR := $(PROJECT_PATH)/devkit/kind
