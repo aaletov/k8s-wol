@@ -1,2 +1,3 @@
 PROJECT_PATH := ${PWD}
-KIND_DIR := $(PROJECT_PATH)/devkit/kind
+DEVKIT_DIR := $(PROJECT_PATH)/devkit
+KIND_DIR := $(DEVKIT_DIR)/kind

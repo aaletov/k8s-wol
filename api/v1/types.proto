@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package wtapi;
+package v1;
 import "google/protobuf/empty.proto";
-option go_package="./wtapi";
+option go_package="./v1";
 
 service WolController {
   rpc WakeUp (WakeUpRequest) returns (google.protobuf.Empty) {}
@@ -10,4 +10,9 @@ service WolController {
 
 message WakeUpRequest {
   string MAC = 1;
+}
+
+message WolNode {
+  string MAC = 1;
+  bool IsAlive = 2;
 }
