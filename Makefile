@@ -8,8 +8,7 @@ docker-build-server:
 	docker build --file ./build/server/Dockerfile --tag server:latest ./build/server 
 
 kind-install:
-	chmod +x $(KIND_DIR)/kind-install.sh
-	$(KIND_DIR)/kind-install.sh
+	go install sigs.k8s.io/kind@${KIND_VERSION}
 
 install-protoc:
 	sudo apt install -y protobuf-compiler
@@ -24,7 +23,7 @@ install-protoc-gen-go:
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 
 kind-create-cluster:
-	${KIND} create cluster --config ./test/deploy/kind/kind.yaml --image kindest/node:v1.23.5 --wait 60s
+	${KIND} create cluster --config ./test/deploy/kind/kind.yaml --image kindest/node:${KIND_NODE_TAG} --wait 60s
 
 kind-load-images:
 	${KIND} load docker-image server:latest
