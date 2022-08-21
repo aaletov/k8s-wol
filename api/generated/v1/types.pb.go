@@ -68,17 +68,17 @@ func (x *WakeUpRequest) GetMAC() string {
 	return ""
 }
 
-type WolNode struct {
+// Should be reconciled inside operator
+type WakeNodeUpRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	MAC     string `protobuf:"bytes,1,opt,name=MAC,proto3" json:"MAC,omitempty"`
-	IsAlive bool   `protobuf:"varint,2,opt,name=IsAlive,proto3" json:"IsAlive,omitempty"`
+	MAC string `protobuf:"bytes,1,opt,name=MAC,proto3" json:"MAC,omitempty"`
 }
 
-func (x *WolNode) Reset() {
-	*x = WolNode{}
+func (x *WakeNodeUpRequest) Reset() {
+	*x = WakeNodeUpRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_types_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -86,13 +86,13 @@ func (x *WolNode) Reset() {
 	}
 }
 
-func (x *WolNode) String() string {
+func (x *WakeNodeUpRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*WolNode) ProtoMessage() {}
+func (*WakeNodeUpRequest) ProtoMessage() {}
 
-func (x *WolNode) ProtoReflect() protoreflect.Message {
+func (x *WakeNodeUpRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_types_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -104,23 +104,72 @@ func (x *WolNode) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use WolNode.ProtoReflect.Descriptor instead.
-func (*WolNode) Descriptor() ([]byte, []int) {
+// Deprecated: Use WakeNodeUpRequest.ProtoReflect.Descriptor instead.
+func (*WakeNodeUpRequest) Descriptor() ([]byte, []int) {
 	return file_types_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *WolNode) GetMAC() string {
+func (x *WakeNodeUpRequest) GetMAC() string {
 	if x != nil {
 		return x.MAC
 	}
 	return ""
 }
 
-func (x *WolNode) GetIsAlive() bool {
-	if x != nil {
-		return x.IsAlive
+// Created by WolController
+type AttainableNode struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	NodeId string `protobuf:"bytes,1,opt,name=NodeId,proto3" json:"NodeId,omitempty"` // Node which can wake up this node
+	MAC    string `protobuf:"bytes,2,opt,name=MAC,proto3" json:"MAC,omitempty"`
+}
+
+func (x *AttainableNode) Reset() {
+	*x = AttainableNode{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_types_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
 	}
-	return false
+}
+
+func (x *AttainableNode) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AttainableNode) ProtoMessage() {}
+
+func (x *AttainableNode) ProtoReflect() protoreflect.Message {
+	mi := &file_types_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AttainableNode.ProtoReflect.Descriptor instead.
+func (*AttainableNode) Descriptor() ([]byte, []int) {
+	return file_types_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *AttainableNode) GetNodeId() string {
+	if x != nil {
+		return x.NodeId
+	}
+	return ""
+}
+
+func (x *AttainableNode) GetMAC() string {
+	if x != nil {
+		return x.MAC
+	}
+	return ""
 }
 
 var File_types_proto protoreflect.FileDescriptor
@@ -131,15 +180,18 @@ var file_types_proto_rawDesc = []byte{
 	0x75, 0x66, 0x2f, 0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x21,
 	0x0a, 0x0d, 0x57, 0x61, 0x6b, 0x65, 0x55, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
 	0x10, 0x0a, 0x03, 0x4d, 0x41, 0x43, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4d, 0x41,
-	0x43, 0x22, 0x35, 0x0a, 0x07, 0x57, 0x6f, 0x6c, 0x4e, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03,
-	0x4d, 0x41, 0x43, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4d, 0x41, 0x43, 0x12, 0x18,
-	0x0a, 0x07, 0x49, 0x73, 0x41, 0x6c, 0x69, 0x76, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52,
-	0x07, 0x49, 0x73, 0x41, 0x6c, 0x69, 0x76, 0x65, 0x32, 0x46, 0x0a, 0x0d, 0x57, 0x6f, 0x6c, 0x43,
-	0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x12, 0x35, 0x0a, 0x06, 0x57, 0x61, 0x6b,
-	0x65, 0x55, 0x70, 0x12, 0x11, 0x2e, 0x76, 0x31, 0x2e, 0x57, 0x61, 0x6b, 0x65, 0x55, 0x70, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x00,
-	0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x43, 0x22, 0x25, 0x0a, 0x11, 0x57, 0x61, 0x6b, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x55, 0x70, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x4d, 0x41, 0x43, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x03, 0x4d, 0x41, 0x43, 0x22, 0x3a, 0x0a, 0x0e, 0x41, 0x74, 0x74, 0x61,
+	0x69, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x4e, 0x6f,
+	0x64, 0x65, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x4e, 0x6f, 0x64, 0x65,
+	0x49, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x4d, 0x41, 0x43, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x03, 0x4d, 0x41, 0x43, 0x32, 0x46, 0x0a, 0x0d, 0x57, 0x6f, 0x6c, 0x43, 0x6f, 0x6e, 0x74, 0x72,
+	0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x12, 0x35, 0x0a, 0x06, 0x57, 0x61, 0x6b, 0x65, 0x55, 0x70, 0x12,
+	0x11, 0x2e, 0x76, 0x31, 0x2e, 0x57, 0x61, 0x6b, 0x65, 0x55, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x00, 0x42, 0x06, 0x5a, 0x04,
+	0x2e, 0x2f, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -154,15 +206,16 @@ func file_types_proto_rawDescGZIP() []byte {
 	return file_types_proto_rawDescData
 }
 
-var file_types_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_types_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_types_proto_goTypes = []interface{}{
-	(*WakeUpRequest)(nil), // 0: v1.WakeUpRequest
-	(*WolNode)(nil),       // 1: v1.WolNode
-	(*empty.Empty)(nil),   // 2: google.protobuf.Empty
+	(*WakeUpRequest)(nil),     // 0: v1.WakeUpRequest
+	(*WakeNodeUpRequest)(nil), // 1: v1.WakeNodeUpRequest
+	(*AttainableNode)(nil),    // 2: v1.AttainableNode
+	(*empty.Empty)(nil),       // 3: google.protobuf.Empty
 }
 var file_types_proto_depIdxs = []int32{
 	0, // 0: v1.WolController.WakeUp:input_type -> v1.WakeUpRequest
-	2, // 1: v1.WolController.WakeUp:output_type -> google.protobuf.Empty
+	3, // 1: v1.WolController.WakeUp:output_type -> google.protobuf.Empty
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -189,7 +242,19 @@ func file_types_proto_init() {
 			}
 		}
 		file_types_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WolNode); i {
+			switch v := v.(*WakeNodeUpRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_types_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AttainableNode); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -207,7 +272,7 @@ func file_types_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_types_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
