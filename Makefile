@@ -22,6 +22,9 @@ install-protoc-gen-go:
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 
+generate-deepcopy:
+	controller-gen object paths=./api/generated/v1 output:dir=./api/generated/v1
+
 kind-create-cluster:
 	${KIND} create cluster --config ./test/deploy/kind/kind.yaml --image kindest/node:${KIND_NODE_TAG} --wait 60s
 
