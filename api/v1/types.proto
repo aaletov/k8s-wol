@@ -11,14 +11,3 @@ service WolController {
 message WakeUpRequest {
   string MAC = 1;
 }
-
-// Should be reconciled inside operator
-message WakeNodeUpRequest {
-  string MAC = 1;
-}
-
-// Created by WolController
-message AttainableNode {
-  string NodeId = 1; // Node which can wake up this node
-  string MAC = 2;
-}
