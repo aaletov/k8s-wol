@@ -30,9 +30,3 @@ kind-load-images:
 
 run:
 	go run ./main A8:A1:59:2F:6E:54
-
-dependencies:
-	go get k8s.io/apimachinery/pkg/apis/meta/v1
-	go get k8s.io/client-go/kubernetes
-	go get k8s.io/client-go/rest
-	go get github.com/sirupsen/logrus
